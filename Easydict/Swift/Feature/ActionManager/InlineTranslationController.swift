@@ -122,16 +122,12 @@ final class InlineTranslationController {
             guard !Task.isCancelled else { return }
 
             do {
-                // Use the same built-in provider as Translate and Replace, in a dedicated request instance.
-                let service = BuiltInAIService()
-                service.queryType = .translation
-                service.queryModel.inputText = command.text
-                service.queryModel.userTargetLanguage = .english
-                let result = try await service.translate(command.text, from: .auto, to: .english)
+                let translatedText = try await LocalTranslationService().translate(
+                    command.text, from: .auto, to: .english
+                )
                 try Task.checkCancellation()
-                if let error = result.error { throw error }
-                guard let translation = result.translatedText?.trimmingCharacters(in: .whitespacesAndNewlines),
-                      !translation.isEmpty,
+                let translation = translatedText.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !translation.isEmpty,
                       generation == requestGeneration,
                       let current = capture(),
                       CFEqual(snapshot.element, current.element),
@@ -143,7 +139,15 @@ final class InlineTranslationController {
             } catch is CancellationError {
                 // Normal editing invalidates an outstanding translation.
             } catch {
+                guard !Task.isCancelled else { return }
                 logError("Inline English translation failed: \(error.localizedDescription)")
+                if generation == requestGeneration,
+                   let current = capture(),
+                   CFEqual(snapshot.element, current.element),
+                   snapshot.pid == current.pid,
+                   command.matches(fullText: current.text, selection: current.selection) {
+                    EZToast.showText(error.localizedDescription)
+                }
             }
         }
     }

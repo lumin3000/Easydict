@@ -1,6 +1,288 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "offline.translation.languages_missing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The required offline language packs are not installed. Your text was not changed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los paquetes de idiomas sin conexión necesarios no están instalados. El texto no se ha modificado."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必要なオフライン言語パックがインストールされていません。原文は変更していません。"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Požadované offline jazykové balíky nie sú nainštalované. Pôvodný text zostal nezmenený."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آف لائن ترجمے کے لیے مطلوبہ زبانوں کے پیک نصب نہیں ہیں۔ اصل متن تبدیل نہیں کیا گیا۔"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所需的离线语言包未安装，原文已保留。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所需的離線語言套件尚未安裝，原文已保留。"
+          }
+        }
+      }
+    },
+    "offline.translation.unsupported_pair" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This language pair is not supported for local translation. Your text was not changed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este par de idiomas no admite traducción local. El texto no se ha modificado."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この言語の組み合わせはローカル翻訳に対応していません。原文は変更していません。"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Táto dvojica jazykov nepodporuje lokálny preklad. Pôvodný text zostal nezmenený."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ان زبانوں کے درمیان مقامی ترجمہ دستیاب نہیں ہے۔ اصل متن تبدیل نہیں کیا گیا۔"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地翻译不支持这组语言，原文已保留。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本機翻譯不支援這組語言，原文已保留。"
+          }
+        }
+      }
+    },
+    "offline.translation.requires_macos26" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This local-only build requires macOS 26 or later for translation. Your text was not changed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta versión de traducción local requiere macOS 26 o posterior. El texto no se ha modificado."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このローカル専用版で翻訳するには macOS 26 以降が必要です。原文は変更していません。"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Táto lokálna verzia vyžaduje na preklad macOS 26 alebo novší. Pôvodný text zostal nezmenený."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صرف مقامی ترجمے کے اس نسخے کے لیے macOS 26 یا جدید تر درکار ہے۔ اصل متن تبدیل نہیں کیا گیا۔"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此本地专用版本需要 macOS 26 或更高版本才能翻译，原文已保留。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此本機專用版本需要 macOS 26 或更新版本才能翻譯，原文已保留。"
+          }
+        }
+      }
+    },
+    "offline.translation.undetected_language" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The language could not be detected locally. Your text was not changed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo detectar el idioma localmente. El texto no se ha modificado."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ローカルで言語を判定できませんでした。原文は変更していません。"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jazyk sa nepodarilo rozpoznať lokálne. Pôvodný text zostal nezmenený."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مقامی طور پر زبان کی شناخت نہیں ہو سکی۔ اصل متن تبدیل نہیں کیا گیا۔"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法在本机识别语言，原文已保留。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法在本機識別語言，原文已保留。"
+          }
+        }
+      }
+    },
+    "offline.translation.online_services_disabled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online services are disabled in this local-only build."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los servicios en línea están desactivados en esta versión local."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このローカル専用版ではオンラインサービスは無効です。"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online služby sú v tejto lokálnej verzii vypnuté."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اس صرف مقامی نسخے میں آن لائن خدمات غیر فعال ہیں۔"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此本地专用版本已停用在线服务。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此本機專用版本已停用線上服務。"
+          }
+        }
+      }
+    },
+    "offline.policy.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This build uses only local translation, language detection, OCR, and speech. Online services and automatic updates are disabled."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta versión solo usa traducción, detección de idioma, OCR y voz locales. Los servicios en línea y las actualizaciones automáticas están desactivados."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このバージョンは翻訳・言語判定・OCR・読み上げを本機で処理します。オンラインサービスと自動更新は無効です。"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Táto verzia používa iba lokálny preklad, detekciu jazyka, OCR a reč. Online služby a automatické aktualizácie sú vypnuté."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "یہ نسخہ صرف مقامی ترجمہ، زبان کی شناخت، OCR اور آواز استعمال کرتا ہے۔ آن لائن خدمات اور خودکار اپ ڈیٹس غیر فعال ہیں۔"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本版本仅使用本机翻译、语言检测、OCR 和朗读，在线服务及自动更新已停用。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本版本僅使用本機翻譯、語言偵測、OCR 和朗讀，線上服務及自動更新已停用。"
+          }
+        }
+      }
+    },
     "%lld" : {
       "shouldTranslate" : false
     },

@@ -43,6 +43,7 @@ public final class DetectManager: NSObject {
 
     /// The OCR service used for text recognition (defaults to AppleService).
     public var ocrService: QueryService {
+        if LocalOnlyPolicy.isEnabled { return AppleService.shared }
         let identifier = Defaults[.ocrServiceID]
         if let service = Self.selectedOCRService(identifier) {
             return service
@@ -119,7 +120,7 @@ public final class DetectManager: NSObject {
             let languageDetectOptimize = MyConfiguration.shared.languageDetectOptimize
 
             // If the detected language is preferred or optimization is disabled, use Apple's result.
-            if isPreferredLanguage || languageDetectOptimize == .none {
+            if LocalOnlyPolicy.isEnabled || isPreferredLanguage || languageDetectOptimize == .none {
                 handleDetectedLanguage(
                     appleDetectedLanguage,
                     queryText: queryText,
@@ -453,7 +454,7 @@ public final class DetectManager: NSObject {
          it will always work in other languages.
          */
 
-        guard MyConfiguration.shared.enableYoudaoOCR else {
+        guard !LocalOnlyPolicy.isEnabled, MyConfiguration.shared.enableYoudaoOCR else {
             completion(ocrResult, error)
             return
         }

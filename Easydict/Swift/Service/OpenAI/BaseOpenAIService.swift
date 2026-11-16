@@ -50,6 +50,9 @@ public class BaseOpenAIService: StreamService {
         to: Language
     )
         -> AsyncThrowingStream<String, any Error> {
+        guard !LocalOnlyPolicy.isEnabled else {
+            return AsyncThrowingStream { $0.finish(throwing: LocalTranslationError.onlineServicesDisabled) }
+        }
         let queryType = queryType(text: text, from: from, to: to)
         let chatQueryParam = ChatQueryParam(
             text: text,

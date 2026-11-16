@@ -19,6 +19,7 @@ enum EasydictCmpatibilityEntry {
     static func main() {
         AppPathMigration.prepareForLaunch()
         parseArmguments()
+        LocalOnlyPolicy.configureDefaults()
 
         // Capturing crash logs must be placed first.
         MMCrash.registerHandler()
@@ -140,6 +141,7 @@ struct EasydictApp: App {
 
     @MainActor
     private static func performPostLaunchTasks() {
+        guard !LocalOnlyPolicy.isEnabled else { return }
         GitHubCopilotModelStore.shared.startAutomaticRefresh()
     }
 

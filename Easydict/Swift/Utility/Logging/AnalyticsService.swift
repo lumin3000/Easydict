@@ -20,6 +20,7 @@ final class AnalyticsService: NSObject {
     /// Configures crash logging services in non-debug builds.
     @objc(setupCrashLogService)
     static func setupCrashService() {
+        guard !LocalOnlyPolicy.isEnabled else { return }
         #if !DEBUG
         configureFirebaseIfNeeded()
         SentrySDK.start { options in
@@ -33,6 +34,10 @@ final class AnalyticsService: NSObject {
 
     /// Enables or disables crash logging, and always disables it in debug builds.
     static func setCrashEnabled(_ enabled: Bool) {
+        guard !LocalOnlyPolicy.isEnabled else {
+            SentrySDK.close()
+            return
+        }
         #if DEBUG
         SentrySDK.close()
         #else
@@ -50,6 +55,7 @@ final class AnalyticsService: NSObject {
     /// - Parameters should use string keys and values that are compatible with analytics.
     @objc(logEventWithName:parameters:)
     static func logEvent(withName name: String, parameters: [String: Any]?) {
+        guard !LocalOnlyPolicy.isEnabled else { return }
         guard MyConfiguration.shared.allowAnalytics else {
             return
         }

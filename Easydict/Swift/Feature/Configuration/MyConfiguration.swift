@@ -151,11 +151,12 @@ class MyConfiguration: NSObject {
 
     var defaultTTSServiceType: ServiceType {
         get {
-            ServiceType(rawValue: Defaults[.defaultTTSServiceType].rawValue)
+            if LocalOnlyPolicy.isEnabled { return .apple }
+            return ServiceType(rawValue: Defaults[.defaultTTSServiceType].rawValue)
         }
         set {
             Defaults[.defaultTTSServiceType] =
-                TTSServiceType(rawValue: newValue.rawValue) ?? .youdao
+                LocalOnlyPolicy.isEnabled ? .apple : (TTSServiceType(rawValue: newValue.rawValue) ?? .youdao)
         }
     }
 

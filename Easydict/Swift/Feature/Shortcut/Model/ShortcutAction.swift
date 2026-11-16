@@ -101,6 +101,10 @@ extension ShortcutAction {
 
     @MainActor
     func executeAction() {
+        guard !LocalOnlyPolicy.isEnabled || (self != .google && self != .eudic) else {
+            EZToast.showText(String(localized: "offline.translation.online_services_disabled"))
+            return
+        }
         Task {
             await configuration.action()
         }

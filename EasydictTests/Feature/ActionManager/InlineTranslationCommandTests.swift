@@ -84,20 +84,6 @@ struct InlineTranslationCommandTests {
         #expect(!command.matches(fullText: value, selection: NSRange(location: command.selection.location, length: 1)))
     }
 
-    @Test("Translates Chinese to English using the real built-in provider", .tags(.requiresLocalEnvironment))
-    @MainActor
-    func realTranslation() async throws {
-        let service = BuiltInAIService()
-        service.queryType = .translation
-        service.queryModel.inputText = "你好，世界！"
-        service.queryModel.userTargetLanguage = .english
-        let result = try await service.translate("你好，世界！", from: .auto, to: .english)
-        #expect(result.error == nil)
-        let text = try #require(result.translatedText?.lowercased())
-        #expect(text.contains("hello"))
-        #expect(text.contains("world"))
-    }
-
     // MARK: Private
 
     private func parse(_ value: String, caret: Int? = nil) -> InlineTranslationCommand? {

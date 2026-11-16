@@ -97,6 +97,15 @@ public class AppleService: QueryService {
         to targetLanguage: Language
     ) async throws
         -> QueryResult {
+        if LocalOnlyPolicy.isEnabled {
+            let translatedText = try await LocalTranslationService().translate(
+                text, from: sourceLanguage, to: targetLanguage
+            )
+            let translatedResult = result ?? QueryResult()
+            translatedResult.translatedResults = [translatedText]
+            result = translatedResult
+            return translatedResult
+        }
         // Use macOS 15+ API to translate if available
         if #available(macOS 15.0, *), MyConfiguration.shared.enableAppleOfflineTranslation {
             let service = await getTranslationService()
@@ -219,6 +228,7 @@ private struct AppleTranslationConfigurationView: View {
                 "service.configuration.apple.offline_translation.title",
                 isOn: $enableOfflineTranslation
             )
+            .disabled(LocalOnlyPolicy.isEnabled)
         } header: {
             Text("apple_translate")
         } footer: {

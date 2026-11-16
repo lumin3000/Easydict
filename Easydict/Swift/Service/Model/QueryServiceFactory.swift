@@ -61,7 +61,7 @@ final class QueryServiceFactory: NSObject {
     static let shared = QueryServiceFactory()
 
     var allServiceTypes: [ServiceType] {
-        serviceRegistrations.map(\.serviceType)
+        serviceRegistrations.map(\.serviceType).filter { LocalOnlyPolicy.allowsService($0.rawValue) }
     }
 
     var allServiceTypeIDs: [String] {
@@ -149,6 +149,7 @@ final class QueryServiceFactory: NSObject {
     }
 
     private func serviceRegistration(withTypeId typeIdIfHave: String) -> ServiceRegistration? {
+        guard LocalOnlyPolicy.allowsService(typeIdIfHave) else { return nil }
         let components = serviceIdentifierComponents(from: typeIdIfHave)
         return serviceRegistrations.first { $0.serviceType.rawValue == components.rawType }
     }

@@ -16,7 +16,7 @@ extension LanguageDetectOptimize: Defaults.Serializable {}
 // MARK: - LanguageDetectOptimize + CaseIterable
 
 extension LanguageDetectOptimize: CaseIterable {
-    public static let allCases: [LanguageDetectOptimize] = [.none, .baidu, .google]
+    public static let allCases: [LanguageDetectOptimize] = [.none]
 }
 
 // MARK: - LanguageDetectOptimize + CustomLocalizedStringResourceConvertible

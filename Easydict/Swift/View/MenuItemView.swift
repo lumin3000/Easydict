@@ -178,7 +178,7 @@ struct MenuItemView: View {
             NSApp.activateApp()
             MyConfiguration.shared.updater.checkForUpdates()
         }
-        .disabled(!store.canCheckForUpdates)
+        .disabled(LocalOnlyPolicy.isEnabled || !store.canCheckForUpdates)
     }
 
     /// Quit item

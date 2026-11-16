@@ -31,10 +31,12 @@ struct PrivacyTab: View {
                 HStack {
                     Text("crash_log")
                     Toggle("allow_collect_crash_log", isOn: $allowCollectCrashLog)
+                        .disabled(LocalOnlyPolicy.isEnabled)
                 }
                 HStack {
                     Text("analytics")
                     Toggle("allow_collect_analytics", isOn: $allowCollectAnalytics)
+                        .disabled(LocalOnlyPolicy.isEnabled)
                 }
             }
         }

@@ -22,8 +22,7 @@ class ActionManager: NSObject {
 
     @objc static let shared = ActionManager()
 
-    var translateService = BuiltInAIService()
-    var polishService = PolishingService()
+    var translateService = AppleService()
 
     // MARK: - Text Field Detection and Access
 
@@ -37,6 +36,12 @@ class ActionManager: NSObject {
 
     /// Polish selected text and replace it with the polished result
     func polishAndReplace() async {
+        guard !LocalOnlyPolicy.isEnabled else {
+            await MainActor.run {
+                EZToast.showText(LocalTranslationError.onlineServicesDisabled.localizedDescription)
+            }
+            return
+        }
         logInfo("Polish and Replace")
         await executeTextReplacementAction(.polish)
     }
@@ -113,7 +118,7 @@ class ActionManager: NSObject {
         case .translate:
             request.serviceType = translateService.serviceType().rawValue
         case .polish:
-            request.serviceType = polishService.serviceType().rawValue
+            request.serviceType = ServiceType.polishing.rawValue
         }
 
         return request
@@ -133,7 +138,17 @@ class ActionManager: NSObject {
         }
 
         guard let streamService = service as? StreamService else {
-            logError("\(service.name()) does not support streaming")
+            do {
+                let result = try await service.translate(request: request)
+                try Task.checkCancellation()
+                if let text = result.translatedText, !text.isEmpty {
+                    let strategies = systemUtility.textStrategies(for: elementInfo)
+                    await systemUtility.insertText(text, using: strategies)
+                }
+            } catch {
+                guard !Task.isCancelled else { return }
+                await MainActor.run { EZToast.showText(error.localizedDescription) }
+            }
             return
         }
 

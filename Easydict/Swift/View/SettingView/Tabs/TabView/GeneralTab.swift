@@ -42,6 +42,9 @@ struct GeneralTab: View {
 
     var body: some View {
         Form {
+            if LocalOnlyPolicy.isEnabled {
+                Section { Text("offline.policy.description") }
+            }
             Section {
                 FirstAndSecondLanguageSettingView()
                 Picker(
@@ -99,7 +102,9 @@ struct GeneralTab: View {
 
             Section {
                 Toggle("show_google_quick_link", isOn: $showGoogleQuickLink)
+                    .disabled(LocalOnlyPolicy.isEnabled)
                 Toggle("show_eudic_quick_link", isOn: $showEudicQuickLink)
+                    .disabled(LocalOnlyPolicy.isEnabled)
                 Toggle("show_apple_dictionary_quick_link", isOn: $showAppleDictionaryQuickLink)
                 Toggle("show_setting_quick_link", isOn: $showQuickActionButton)
             } header: {
@@ -148,11 +153,13 @@ struct GeneralTab: View {
                     Button("check_now") {
                         MyConfiguration.shared.updater.checkForUpdates()
                     }
+                    .disabled(LocalOnlyPolicy.isEnabled)
                 }
 
                 Toggle(isOn: $checkUpdaterViewModel.autoChecksForUpdates) {
                     Text("auto_check_update ")
                 }
+                .disabled(LocalOnlyPolicy.isEnabled)
 
                 HStack {
                     VStack(alignment: .leading, spacing: 8) {
@@ -165,7 +172,7 @@ struct GeneralTab: View {
                     Toggle(
                         isOn: $includeBetaUpdates.didSet(execute: { state in
                             logSettings(["include_beta_updates": state])
-                            if state {
+                            if state, !LocalOnlyPolicy.isEnabled {
                                 MyConfiguration.shared.updater.checkForUpdates()
                             }
                         })
@@ -173,6 +180,7 @@ struct GeneralTab: View {
                         EmptyView()
                     }
                     .labelsHidden()
+                    .disabled(LocalOnlyPolicy.isEnabled)
                 }
 
                 LaunchAtLogin.Toggle {

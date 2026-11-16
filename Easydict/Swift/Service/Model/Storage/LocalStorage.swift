@@ -90,12 +90,15 @@ final class LocalStorage: NSObject {
     func allServiceTypes(_ windowType: EZWindowType) -> [String] {
         let allServiceTypesKey = serviceTypesKey(of: windowType)
 
-        guard let storedTypes = userDefaults.array(forKey: allServiceTypesKey) as? [String] else {
-            userDefaults.set(defaultServiceTypeIDs, forKey: allServiceTypesKey)
-            return defaultServiceTypeIDs
+        let storedTypes = userDefaults.stringArray(forKey: allServiceTypesKey) ?? defaultServiceTypeIDs
+        var localTypes = storedTypes.filter { LocalOnlyPolicy.allowsService($0) }
+        if !localTypes.contains(ServiceType.apple.rawValue) {
+            localTypes.insert(ServiceType.apple.rawValue, at: 0)
         }
-
-        return storedTypes
+        if localTypes != userDefaults.stringArray(forKey: allServiceTypesKey) {
+            userDefaults.set(localTypes, forKey: allServiceTypesKey)
+        }
+        return localTypes
     }
 
     /// Persists ordered service type identifiers for the given window.
@@ -262,6 +265,7 @@ final class LocalStorage: NSObject {
     /// - Returns: Configured service instance, or `nil` for unrecognized types.
     @objc(service:windowType:)
     func service(_ serviceTypeId: String, windowType: EZWindowType) -> QueryService? {
+        guard LocalOnlyPolicy.allowsService(serviceTypeId) else { return nil }
         guard let service = QueryServiceFactory.shared.service(withTypeId: serviceTypeId) else {
             assertionFailure("Unsupported service type: \(serviceTypeId)")
             logError("Unsupported service type: \(serviceTypeId)")
@@ -425,9 +429,8 @@ final class LocalStorage: NSObject {
     private let decoder = JSONDecoder()
 
     private let defaultServiceTypeIDs: [String] = [
-        ServiceType.youdao.rawValue,
-        ServiceType.deepL.rawValue,
-        ServiceType.builtInAI.rawValue,
+        ServiceType.apple.rawValue,
+        ServiceType.appleDictionary.rawValue,
     ]
 
     /// Raw dictionary backing service query statistics.

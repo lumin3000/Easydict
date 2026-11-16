@@ -57,6 +57,7 @@ struct AdvancedTab: View {
                         subtitleText: "setting.advance.prefer_youdao_tts_for_english_word_desc"
                     )
                 }
+                .disabled(LocalOnlyPolicy.isEnabled)
                 LabeledContent {
                     TextField(
                         text: $minClassicalChineseTextDetectLength,
@@ -269,6 +270,7 @@ struct AdvancedTab: View {
                         subtitleText: "setting.advance.enable_youdao_ocr_desc"
                     )
                 }
+                .disabled(LocalOnlyPolicy.isEnabled)
                 Toggle(isOn: $enableOCRTextNormalization) {
                     AdvancedTabItemView(
                         color: .green,

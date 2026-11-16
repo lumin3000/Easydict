@@ -159,6 +159,9 @@ public class StreamService: QueryService {
         to: Language
     )
         -> AsyncThrowingStream<QueryResult, Error> {
+        guard !LocalOnlyPolicy.isEnabled else {
+            return AsyncThrowingStream { $0.finish(throwing: LocalTranslationError.onlineServicesDisabled) }
+        }
         let (activeResult, activeGeneration) = updateResultLock.withLock {
             let activeResult = result ?? QueryResult()
             if result == nil { result = activeResult }
@@ -518,6 +521,7 @@ public class StreamService: QueryService {
     }
 
     func fetchRemoteModelData(url: URL, headers: HTTPHeaders = []) async throws -> Data {
+        guard !LocalOnlyPolicy.isEnabled else { throw LocalTranslationError.onlineServicesDisabled }
         let response = await AF.request(
             url,
             method: .get,

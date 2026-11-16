@@ -216,6 +216,9 @@ open class QueryService: NSObject {
     ///
     /// - NOTE: This function only returns the final result. For incremental results, use `startQueryStream(_:)`.
     open func startQuery(_ queryModel: QueryModel) async throws -> QueryResult {
+        guard LocalOnlyPolicy.allowsService(serviceType().rawValue) else {
+            throw LocalTranslationError.onlineServicesDisabled
+        }
         self.queryModel = queryModel
 
         let queryText = queryModel.queryText
@@ -564,6 +567,9 @@ extension QueryService {
     /// same lock as reset. No lock is held while awaiting stream output.
     private func startQueryStream(_ queryModel: QueryModel, generation: UInt)
         -> AsyncThrowingStream<QueryResult, Error> {
+        guard LocalOnlyPolicy.allowsService(serviceType().rawValue) else {
+            return AsyncThrowingStream { $0.finish(throwing: LocalTranslationError.onlineServicesDisabled) }
+        }
         let queryText = queryModel.queryText
         let fromLanguage = queryModel.queryFromLanguage
         let targetLanguage = queryModel.queryTargetLanguage

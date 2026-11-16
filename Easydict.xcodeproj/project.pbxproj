@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E11120261116000000000034 /* LocalOnlyPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261116000000000024 /* LocalOnlyPolicyTests.swift */; };
+		E11120261116000000000033 /* LocalTranslationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261116000000000023 /* LocalTranslationServiceTests.swift */; };
+		E11120261116000000000032 /* LocalTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261116000000000022 /* LocalTranslationService.swift */; };
+		E11120261116000000000031 /* LocalOnlyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261116000000000021 /* LocalOnlyPolicy.swift */; };
 		E11120261116000000000011 /* FocusedInputObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261116000000000001 /* FocusedInputObserver.swift */; };
 		E11120261115000000000013 /* InlineTranslationCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261115000000000003 /* InlineTranslationCommandTests.swift */; };
 		E11120261115000000000012 /* InlineTranslationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261115000000000002 /* InlineTranslationController.swift */; };
@@ -708,6 +712,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E11120261116000000000024 /* LocalOnlyPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalOnlyPolicyTests.swift; sourceTree = "<group>"; };
+		E11120261116000000000023 /* LocalTranslationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTranslationServiceTests.swift; sourceTree = "<group>"; };
+		E11120261116000000000022 /* LocalTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTranslationService.swift; sourceTree = "<group>"; };
+		E11120261116000000000021 /* LocalOnlyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalOnlyPolicy.swift; sourceTree = "<group>"; };
 		E11120261116000000000001 /* FocusedInputObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedInputObserver.swift; sourceTree = "<group>"; };
 		E11120261115000000000003 /* InlineTranslationCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTranslationCommandTests.swift; sourceTree = "<group>"; };
 		E11120261115000000000002 /* InlineTranslationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTranslationController.swift; sourceTree = "<group>"; };
@@ -1542,6 +1550,7 @@
 			isa = PBXGroup;
 			children = (
 				E11120261115000000000003 /* InlineTranslationCommandTests.swift */,
+				E11120261116000000000024 /* LocalOnlyPolicyTests.swift */,
 			);
 			path = ActionManager;
 			sourceTree = "<group>";
@@ -2067,6 +2076,7 @@
 			isa = PBXGroup;
 			children = (
 				036463692CB62B8900D0D6CC /* AppleService.swift */,
+				E11120261116000000000022 /* LocalTranslationService.swift */,
 				03F19D7B2E08FB060046C6F2 /* AppleLanguageMapper.swift */,
 				031760F02E07FB2800CE8FD7 /* AppleLanguageDetector */,
 				031760F22E07FB2800CE8FD7 /* AppleSpeechService */,
@@ -3000,6 +3010,7 @@
 				03A884792F14000100D5C0DE /* BingServiceTests.swift */,
 				A5D1E5B50000000000000001 /* DeepLServiceTests.swift */,
 				0652043BE29F4DEC887CAA78 /* AppleServiceTests.swift */,
+				E11120261116000000000023 /* LocalTranslationServiceTests.swift */,
 				A13180012026091600000001 /* AppleDictionaryTests.swift */,
 				034080A12F6B1C75005C8508 /* AppleSpeechServiceTests.swift */,
 				A1C1A10030ABCDEF00112233 /* ClaudeSSEParserTests.swift */,
@@ -4026,6 +4037,7 @@
 			isa = PBXGroup;
 			children = (
 				DC46DF7F2B4417B900DEAE3E /* MyConfiguration.swift */,
+				E11120261116000000000021 /* LocalOnlyPolicy.swift */,
 				0327A5A52CCA7ACF002BA81B /* Configuration+Extension.swift */,
 				EA3B81F82B5254AA004C0E8B /* Defaults.Keys+Extension.swift */,
 				DCF176F12B57CED700CA6026 /* Configuration+UserData.swift */,
@@ -4616,6 +4628,7 @@
 				02DEDC0420260430000000BE /* MarkdownRendererTests.swift in Sources */,
 				A12760012026090500000001 /* ReverseTranslationTests.swift in Sources */,
 				C09AC0F264D246FC90F9A277 /* AppleServiceTests.swift in Sources */,
+				E11120261116000000000033 /* LocalTranslationServiceTests.swift in Sources */,
 				03A884782F13000100D5C0DE /* AppleScriptExecutorTests.swift in Sources */,
 				03A884742F13000100D5C0DE /* AppleScriptProcessExecutorTests.swift in Sources */,
 				03A8847A2F14000100D5C0DE /* BingServiceTests.swift in Sources */,
@@ -4631,6 +4644,7 @@
 				03A8846E2F12000100D5C0DE /* TaskTimeoutTests.swift in Sources */,
 				A1D1807E2F8D100100B1C0D1 /* ThrottleGateTests.swift in Sources */,
 				E11120261115000000000013 /* InlineTranslationCommandTests.swift in Sources */,
+				E11120261116000000000034 /* LocalOnlyPolicyTests.swift in Sources */,
 				B95E8E65988E4351BF03462E /* UtilityFunctionsTests.swift in Sources */,
 				A73120261023000000000001 /* LocalizationTests.swift in Sources */,
 				73960B6BE1AB4186BA1377CF /* TestSuites.swift in Sources */,
@@ -4914,6 +4928,7 @@
 				033EAA9F2CBBBE2B004DC199 /* ForceGetSelectedTextType.swift in Sources */,
 				03542A342936F70F00C34C33 /* EZLanguageManager.m in Sources */,
 				0364636A2CB62B8900D0D6CC /* AppleService.swift in Sources */,
+				E11120261116000000000032 /* LocalTranslationService.swift in Sources */,
 				03D9D6FB2D8C0D38009E0CEC /* Screenshot+EventMonitor.swift in Sources */,
 				A6F40A102F00000100000001 /* ScreenshotKeyboardEventTap.swift in Sources */,
 				B4D8B2EE2F9E1D8D0088A304 /* EZWindowPatch.m in Sources */,
@@ -5128,6 +5143,7 @@
 				2746AEC12AF95138005FE0A1 /* CaiyunService.swift in Sources */,
 				03B73F7B2D9C51580051CB74 /* ChineseDetection+Poetry.swift in Sources */,
 				DC46DF802B4417B900DEAE3E /* MyConfiguration.swift in Sources */,
+				E11120261116000000000031 /* LocalOnlyPolicy.swift in Sources */,
 				0370A0B12FBA0001000A0B12 /* AnkiConnectClient.swift in Sources */,
 				036E7D7B293F4FC8002675DF /* EZOpenLinkButton.m in Sources */,
 				03832F542B5F6BE200D0DC64 /* AdvancedTab.swift in Sources */,

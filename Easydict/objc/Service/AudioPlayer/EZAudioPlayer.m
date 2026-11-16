@@ -189,6 +189,13 @@ static NSString *const kItemWhereFroms = @"com.apple.metadata:kMDItemWhereFroms"
         return;
     }
 
+    if (EZLocalOnlyPolicy.isEnabled) {
+        self.text = text;
+        self.language = language;
+        [self playSystemTextAudio:text language:language];
+        return;
+    }
+
     self.isPlaying = YES;
     self.serviceType = designatedService.serviceType ?: self.service.serviceType;
 

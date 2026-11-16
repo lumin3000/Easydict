@@ -17,6 +17,10 @@ enum TTSServiceType: String, CaseIterable {
     case google = "Google"
     case baidu = "Baidu"
     case apple = "Apple"
+
+    // MARK: Internal
+
+    static let allCases: [TTSServiceType] = [.apple]
 }
 
 // MARK: CustomLocalizedStringResourceConvertible
