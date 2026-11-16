@@ -158,6 +158,7 @@ final class EventMonitor: NSObject {
     }
 
     func stop() {
+        inlineTranslationController.cancel()
         invalidateAutoSelection()
         selectionEventScope = nil
         eventMonitorEngine.stop()
@@ -223,6 +224,7 @@ final class EventMonitor: NSObject {
     private let appContextProvider: AppContextProvider
     private let systemUtility: SystemUtility
     private let languageDetector = AppleLanguageDetector()
+    private let inlineTranslationController = InlineTranslationController()
 
     private var lastEvent: NSEvent?
     private var currentModifierFlags: NSEvent.ModifierFlags = []
@@ -246,6 +248,7 @@ extension EventMonitor {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            self?.inlineTranslationController.cancel()
             self?.invalidateAutoSelection()
             self?.forceDismissPopButton()
         }
@@ -275,6 +278,14 @@ extension EventMonitor {
     }
 
     private func handleMonitorEvent(_ event: NSEvent, scope: EventScope) {
+        switch event.type {
+        case .keyDown, .leftMouseDown, .leftMouseDragged, .rightMouseDown:
+            inlineTranslationController.cancel()
+        case .keyUp:
+            inlineTranslationController.handleKeyUp(event)
+        default:
+            break
+        }
         #if DEBUG
         let eventStart = CFAbsoluteTimeGetCurrent()
         defer {
