@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E11120261116000000000011 /* FocusedInputObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261116000000000001 /* FocusedInputObserver.swift */; };
 		E11120261115000000000013 /* InlineTranslationCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261115000000000003 /* InlineTranslationCommandTests.swift */; };
 		E11120261115000000000012 /* InlineTranslationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261115000000000002 /* InlineTranslationController.swift */; };
 		E11120261115000000000011 /* InlineTranslationCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11120261115000000000001 /* InlineTranslationCommand.swift */; };
@@ -707,6 +708,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E11120261116000000000001 /* FocusedInputObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedInputObserver.swift; sourceTree = "<group>"; };
 		E11120261115000000000003 /* InlineTranslationCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTranslationCommandTests.swift; sourceTree = "<group>"; };
 		E11120261115000000000002 /* InlineTranslationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTranslationController.swift; sourceTree = "<group>"; };
 		E11120261115000000000001 /* InlineTranslationCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTranslationCommand.swift; sourceTree = "<group>"; };
@@ -2441,6 +2443,7 @@
 			children = (
 				03A00D872E616D56001A4D82 /* ActionManager.swift */,
 				E11120261115000000000002 /* InlineTranslationController.swift */,
+				E11120261116000000000001 /* FocusedInputObserver.swift */,
 				E11120261115000000000001 /* InlineTranslationCommand.swift */,
 			);
 			path = ActionManager;
@@ -5061,6 +5064,7 @@
 				EAE3D3502B62E9DE001EE3E3 /* GlobalContext.swift in Sources */,
 				03715A292E6D25170067259C /* ActionManager.swift in Sources */,
 				E11120261115000000000012 /* InlineTranslationController.swift in Sources */,
+				E11120261116000000000011 /* FocusedInputObserver.swift in Sources */,
 				E11120261115000000000011 /* InlineTranslationCommand.swift in Sources */,
 				EA9943F02B5354C400EE7B97 /* ShowWindowPositionExtensions.swift in Sources */,
 				96B2F1C52C07782400AD3126 /* GitHubReleaseFetcher.swift in Sources */,

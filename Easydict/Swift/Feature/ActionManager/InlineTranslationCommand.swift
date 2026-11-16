@@ -17,7 +17,7 @@ struct InlineTranslationCommand {
               selection.location <= value.length else { return nil }
 
         let prefix = value.substring(to: selection.location)
-        guard let expression = try? NSRegularExpression(pattern: #"(?:^|(?<=\s))/en[ \t]+([^\\|、]+)[\\|、]\z"#),
+        guard let expression = try? NSRegularExpression(pattern: #"(?:^|(?<=\s))/en[ \t]+([^\\|｜、]+)[\\|｜、]\z"#),
               let match = expression.firstMatch(
                   in: prefix,
                   range: NSRange(location: 0, length: (prefix as NSString).length)
@@ -44,5 +44,10 @@ struct InlineTranslationCommand {
     /// Reject stale results after edits or caret movement, including edits outside the command.
     func matches(fullText: String, selection: NSRange) -> Bool {
         self.fullText == fullText && self.selection == selection
+    }
+
+    /// Produce the complete input value while changing only the parsed command range.
+    func replacingCommand(with translation: String) -> String {
+        (fullText as NSString).replacingCharacters(in: range, with: translation)
     }
 }

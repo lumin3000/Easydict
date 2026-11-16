@@ -15,7 +15,7 @@ struct InlineTranslationCommandTests {
     // MARK: Internal
 
     @Test("Recognizes committed Chinese and trims command whitespace", arguments: [
-        "/en 你好、", "/en 你好|", "/en 你好\\", "/en\t你好\\", "/en   你好  \\",
+        "/en 你好、", "/en 你好|", "/en 你好｜", "/en 你好\\", "/en\t你好\\", "/en   你好  \\",
         "/en 繁體中文、", "/en 明天 review PR|", "/en 第一行\n第二行、",
     ])
     func recognizesCommand(_ value: String) throws {
@@ -43,7 +43,7 @@ struct InlineTranslationCommandTests {
         let command = try #require(parse(value, caret: caret))
         #expect(command.text == "明天见")
         #expect(command.range.location == (prefix as NSString).length)
-        #expect((value as NSString).replacingCharacters(in: command.range, with: "See you tomorrow")
+        #expect(command.replacingCommand(with: "See you tomorrow")
             == "😀 前文 See you tomorrow 后文 🚀")
     }
 
@@ -52,15 +52,15 @@ struct InlineTranslationCommandTests {
         let value = "/en 你好\\ /en 再见\\"
         let command = try #require(parse(value))
         #expect(command.text == "再见")
-        #expect((value as NSString).replacingCharacters(in: command.range, with: "Goodbye") == "/en 你好\\ Goodbye")
+        #expect(command.replacingCommand(with: "Goodbye") == "/en 你好\\ Goodbye")
     }
 
-    @Test("All supported terminators delimit separate commands", arguments: ["、", "|", "\\"])
+    @Test("All supported terminators delimit separate commands", arguments: ["、", "|", "｜", "\\"])
     func terminators(_ terminator: String) throws {
         let value = "/en 你好" + terminator + " /en 再见" + terminator
         let command = try #require(parse(value))
         #expect(command.text == "再见")
-        #expect((value as NSString).replacingCharacters(in: command.range, with: "Goodbye")
+        #expect(command.replacingCommand(with: "Goodbye")
             == "/en 你好" + terminator + " Goodbye")
     }
 

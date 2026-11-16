@@ -155,10 +155,11 @@ final class EventMonitor: NSObject {
 
     func start() {
         eventMonitorEngine.start()
+        inlineTranslationController.start()
     }
 
     func stop() {
-        inlineTranslationController.cancel()
+        inlineTranslationController.stop()
         invalidateAutoSelection()
         selectionEventScope = nil
         eventMonitorEngine.stop()
@@ -179,6 +180,7 @@ final class EventMonitor: NSObject {
             return event
         }
         addBothMonitor(MyConfiguration.shared.autoSelectText)
+        inlineTranslationController.start()
     }
 
     func isAccessibilityEnabled() -> Bool {
@@ -248,7 +250,7 @@ extension EventMonitor {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.inlineTranslationController.cancel()
+            self?.inlineTranslationController.updateFrontmostApplication()
             self?.invalidateAutoSelection()
             self?.forceDismissPopButton()
         }
@@ -281,8 +283,8 @@ extension EventMonitor {
         switch event.type {
         case .keyDown, .leftMouseDown, .leftMouseDragged, .rightMouseDown:
             inlineTranslationController.cancel()
-        case .keyUp:
-            inlineTranslationController.handleKeyUp(event)
+        case .leftMouseUp:
+            inlineTranslationController.refreshFocus()
         default:
             break
         }

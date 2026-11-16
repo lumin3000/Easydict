@@ -1,6 +1,6 @@
-## 2026-11-15 | 任务：Add inline English translation
+## 2026-11-16 | 任务：Add inline English translation
 
-**Links:** [Active plan](../../exec-plans/active/2026-11-15-inline-english-translation.md)
+**Links:** [Completed plan](../../exec-plans/completed/2026-11/2026-11-15-inline-english-translation.md)
 
 ### 执行上下文
 
@@ -10,40 +10,45 @@
 
 ### 用户请求
 
-Clone the official Easydict repository and implement automatic Chinese-to-English replacement in the focused input. The user subsequently requested `、` or `|` terminators because backslash is inconvenient with Chinese input.
+Clone official Easydict locally and translate Chinese directly in the focused input. Support Chinese-input-friendly `、` or `|` endings; the user approved Accessibility access on 2026-11-16.
 
 ### 变更
 
-- Added `/en 中文、` and `/en 中文|`, retaining backslash compatibility. Inspect committed input on terminator key-up or keyboard paste using the existing event monitor.
-- Added strict command parsing, Chinese-content detection, multiline handling and UTF-16 replacement ranges, preserving surrounding text.
-- Reuse the built-in Translate and Replace provider with an explicit English target and a dedicated service request. Wait for its complete successful result before making any text change.
-- Cancel on typing, clicks, app switches and shutdown. Recheck focused app/element, entire text and caret before writing through AX selected-text APIs. Password fields and unsupported controls remain untouched; the clipboard is never used by the implementation.
-- Added focused tests, project references and English/Chinese usage documentation.
+- Added `/en 中文、`, `/en 中文|`, fullwidth `｜` and legacy backslash endings. AX focus/value/selection observation handles actual input changes, IME commits and paste.
+- Added UTF-16 command parsing and exact range replacement, preserving surrounding text. A dedicated existing built-in provider request always targets English and completes before any write.
+- Deduplicate notifications; cancel on edits, clicks, app changes and shutdown; recheck app, element, full value and caret before writing. Secure and unsupported inputs are excluded.
+- Use an atomic full-value AX edit where supported. This fixes Chrome's selection-only behavior while preserving surrounding text. Position the caret after the AX text tree exposes the new value, fixing Chrome's return-to-start behavior. Native selected-text insertion remains available for read-only full values.
+- Added focused tests, project references and bilingual usage documentation. No clipboard access or keystroke injection is used.
 
 ### 设计意图
 
-Reuse Easydict's existing event lifecycle and translation provider. Native AX replacement confines the write to the command, and complete-result validation avoids partial edits during network failures or normal editing.
+Observe the content the user actually entered, reuse Easydict's service and monitor lifecycle, and commit a complete translation only to the unchanged original input. Live tests drove the browser write and caret fixes; no application-specific identifiers or generic command framework were introduced.
 
 ### 验证
 
-- Debug `xcodebuild test`, focused on `InlineTranslationCommandTests`: **passed**, 7 tests covering 26 invocations, including all terminators, incomplete/invalid input, multiline/traditional Chinese, emoji offsets, preservation of surrounding text, multiple commands and stale snapshots.
-- `xcodebuild test-without-building -testPlan LocalEnvironment`, focused on `realTranslation()`: **passed**, actual built-in provider returned English containing `hello` and `world` in 2.233 seconds.
-- Local environment overrides: signing disabled, existing `Easydict-26` icon selected and `Easydict-27.icon` excluded. Upstream `CodexFormulaImageTests.swift` was excluded from this focused build because Xcode 26.0 lacks `Test.cancel`. Default signing/icon settings and unrelated tests were not edited. Full-suite and Release validation were not performed.
-- `git diff --check` and project `plutil -lint`: **passed**.
-- Review skill: no actionable findings; the source/project/test content hashes were unchanged after review. The bounded implementation is sufficient for AX-writable text inputs without a generic command framework or synthetic keystroke replacement.
-- Interactive Chrome attempt: `/en 明天见、` remained unchanged. System Settings showed `Easydict-debug` Accessibility permission **off**. The permission change requires user confirmation; actual replacement and Chinese IME composition remain **unverified**. The blocking screenshot was inspected and retained outside Git.
+- Final focused Debug `xcodebuild test`: **passed**, 7 tests / 28 invocations. Covers all endings, invalid/incomplete commands, multiline/traditional Chinese, UTF-16/emoji offsets, surrounding text, multiple commands and stale snapshots.
+- Real built-in provider test through `LocalEnvironment`: **passed**, English contained `hello` and `world` (2.233 seconds). Interactive tests also called the actual provider.
+- Final Chrome: textarea with `、`, single-line `|` and `｜`, and contenteditable with backslash. Expected results included `See you tomorrow`, `Thank you`, `Goodbye` and `Document: Good morning`. All passed.
+- Prefix/suffix/caret: `😀 Prefix /en 明天见、 Suffix 🚀` became `😀 Prefix See you tomorrow Suffix 🚀`; next insertion produced `😀 Prefix See you tomorrow! Suffix 🚀`. Contenteditable similarly accepted `!` after `Good morning`.
+- Pending edit cancellation retained the original long command plus ` KEEP`. Changing focus retained the original command while another input remained focused. A secure field retained its original nine masked characters. Passed.
+- Final native TextEdit: `/en 晚安|` became `Good night`; the next insertion yielded `Good night!`. Passed. Test document saved outside the repository.
+- Screenshots `accepted-prefix-suffix.png` and `accepted-native.png`, UI assertions, full logs and source hashes are preserved outside Git and were inspected. Task-owned windows and app instances were cleaned up.
+- Review skill: no unresolved actionable findings after reviewing the final six-file source/project/test snapshot, including observer lifetime, stop behavior, cancellation and async caret completion. Source hashes unchanged after review. `git diff --check` and project `plutil -lint` passed.
+- Xcode 26.0 local overrides: signing disabled, existing `Easydict-26` icon selected, `Easydict-27.icon` and unrelated `CodexFormulaImageTests.swift` excluded from this focused build. The upstream default icon and `Test.cancel` require a newer toolchain. No shipped settings or unrelated tests were edited; full-suite, Release and distribution signing remain unvalidated.
+- Test setup correction: background CUA edits do not activate an app. Normal Finder opening activated the test app so Easydict observed the correct frontmost input. Initial permission-blocked results were not counted as successful interaction tests.
 
 ### 受影响文件
 
 - `Easydict/Swift/Feature/ActionManager/InlineTranslationCommand.swift`
 - `Easydict/Swift/Feature/ActionManager/InlineTranslationController.swift`
+- `Easydict/Swift/Feature/ActionManager/FocusedInputObserver.swift`
 - `Easydict/Swift/Utility/EventMonitor/Core/EventMonitor.swift`
 - `EasydictTests/Feature/ActionManager/InlineTranslationCommandTests.swift`
 - `Easydict.xcodeproj/project.pbxproj`
 - `docs/user-docs/en/Inline-translation.md`
 - `docs/user-docs/zh/Inline-translation.md`
-- This history and its active plan.
+- This history and the completed plan.
 
 ### 后续事项
 
-- After Accessibility access is approved, relaunch this build and verify actual replacement for all terminators, surrounding-text preservation, continued-edit cancellation and password-field exclusion. Capture the final result, update this history and archive the plan only after acceptance.
+- None for the requested local implementation. Full-suite and signed Release validation require a compatible toolchain and signing setup.
